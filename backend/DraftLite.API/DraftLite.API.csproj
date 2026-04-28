@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.26" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DraftLite.DATA\DraftLite.DATA.csproj" />
+    <ProjectReference Include="..\DraftLite.DTO\DraftLite.DTO.csproj" />
+    <ProjectReference Include="..\DraftLite.SERVICE\DraftLite.SERVICE.csproj" />
+  </ItemGroup>
+
+</Project>
