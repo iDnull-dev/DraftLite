@@ -1,0 +1,38 @@
+<div class="auth-overlay">
+  <div class="auth-card">
+    <h1>DraftLite</h1>
+
+    <p class="subtitle">Connexion / inscription avec Google.</p>
+
+    <div #googleButton class="google-button"></div>
+
+    <div class="separator"></div>
+
+    @if (loading) {
+      <p class="status">Chargement...</p>
+    } 
+    @if (showPseudoForm) {
+      <form [formGroup]="pseudoForm" (ngSubmit)="submitPseudo()">
+        <label>
+          Pseudo (unique)
+          <input formControlName="pseudo" type="text" autocomplete="nickname" />
+        </label>
+
+        <div class="actions">
+          <button type="submit" [disabled]="pseudoForm.invalid">Valider</button>
+        </div>
+
+        @if (pseudoError) {
+          <p class="error">{{ pseudoError }}</p>
+        }
+      </form>
+    } @else if (pseudoError) {
+      <p class="error">{{ pseudoError }}</p>
+    }
+
+    @if (signedInUser) {
+      <p class="status">Connecté en tant que {{ signedInUser.pseudo }}.</p>
+    }
+  </div>
+</div>
+

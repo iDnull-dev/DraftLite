@@ -55,3 +55,4 @@ packages/
 appsettings.Development.json
 appsettings.Local.json
 
+DraftLite.Angular/src/environments/environment.ts

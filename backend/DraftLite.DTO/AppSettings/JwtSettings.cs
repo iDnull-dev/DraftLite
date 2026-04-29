@@ -1,4 +1,4 @@
-namespace NotionLike.Dto.AppSettings;
+namespace DraftLite.Dto.AppSettings;
 
 public sealed class JwtSettings
 {
