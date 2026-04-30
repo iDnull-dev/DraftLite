@@ -1,0 +1,199 @@
+@import '../../app.scss';
+
+.dl-sidebar {
+  width:            0;
+  height: 100%;
+  overflow:         hidden;
+  flex-shrink:      0;
+  background:       var(--surface-section, $dl-section);
+  border-left:      1px solid var(--surface-border, $dl-border);
+  display:          flex;
+  flex-direction:   column;
+  transition:       width $dl-transition-base;
+  position:         relative;
+  float: right;
+
+  // Visible state — push effect
+  &--visible {
+    width:     $dl-sidebar-width;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  // Inner min-width to prevent content collapse during animation
+  > * {
+    min-width: $dl-sidebar-width;
+  }
+
+  &__header {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    padding:         1rem 1rem 0.5rem;
+  }
+
+  &__title {
+    font-size:   0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color:       var(--text-color-secondary, $dl-text-muted);
+  }
+
+  &__close {
+    color:  var(--text-color-secondary, $dl-text-muted) !important;
+    width:  28px !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+
+    &:hover {
+      color: var(--text-color, $dl-text) !important;
+    }
+  }
+
+  &__divider {
+    margin: 0.25rem 0 !important;
+    border-color: var(--surface-border, $dl-border) !important;
+  }
+
+  &__section {
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  &__section-header {
+    display:     flex;
+    align-items: center;
+    gap:         0.4rem;
+    padding:     0.25rem 1rem 0.5rem;
+  }
+
+  &__section-icon {
+    font-size: 0.85rem;
+    color:     var(--primary-color, $dl-purple-600);
+  }
+
+  &__section-title {
+    font-size:   0.8rem;
+    font-weight: 600;
+    color:       var(--text-color, $dl-text);
+    margin:      0;
+    flex:        1;
+  }
+
+  &__badge {
+    ::ng-deep .p-badge {
+      font-size:     0.65rem;
+      min-width:     1.2rem;
+      height:        1.2rem;
+      line-height:   1.2rem;
+      padding:       0 0.35rem;
+      background:    rgba($dl-purple-600, 0.2);
+      color:         $dl-purple-400;
+      border-radius: 999px;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding:    0;
+    margin:     0;
+  }
+
+  &__item {
+    display:     flex;
+    align-items: center;
+    gap:         0.6rem;
+    padding:     0.45rem 1rem;
+    cursor:      pointer;
+    transition:  background 0.15s;
+    border-radius: 6px;
+    margin:      0 0.5rem;
+
+    &:hover {
+      background: var(--surface-overlay, $dl-overlay);
+    }
+  }
+
+  &__item-icon {
+    font-size: 0.8rem;
+    color:     var(--text-color-secondary, $dl-text-muted);
+    flex-shrink: 0;
+  }
+
+  &__item-content {
+    display:        flex;
+    flex-direction: column;
+    min-width:      0;
+  }
+
+  &__item-title {
+    font-size:     0.82rem;
+    font-weight:   500;
+    white-space:   nowrap;
+    overflow:      hidden;
+    text-overflow: ellipsis;
+    color:         var(--text-color, $dl-text);
+  }
+
+  &__item-meta {
+    font-size: 0.7rem;
+    color:     var(--text-color-secondary, $dl-text-muted);
+  }
+
+  &__empty {
+    display:         flex;
+    align-items:     center;
+    gap:             0.4rem;
+    padding:         0.6rem 1rem;
+    color:           var(--text-color-secondary, $dl-text-faint);
+    font-size:       0.78rem;
+    font-style:      italic;
+
+    i { font-size: 0.85rem; }
+  }
+
+  &__add-btn {
+    margin:     0.25rem 0.5rem 0;
+    color:      var(--primary-color, $dl-purple-600) !important;
+    font-size:  0.78rem !important;
+
+    &:hover {
+      background: rgba($dl-purple-600, 0.08) !important;
+    }
+  }
+
+  &__footer {
+    margin-top:  auto;
+    padding:     1rem;
+    border-top:  1px solid var(--surface-border, $dl-border);
+  }
+
+  &__invite-btn {
+    width:        100%;
+    border-color: rgba($dl-purple-600, 0.4) !important;
+    color:        var(--primary-color, $dl-purple-600) !important;
+    font-size:    0.8rem !important;
+
+    &:hover {
+      background:   rgba($dl-purple-600, 0.08) !important;
+      border-color: var(--primary-color, $dl-purple-600) !important;
+    }
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────
+
+@media (max-width: 600px) {
+  .dl-sidebar--visible {
+    width:    100vw;
+    position: fixed;
+    top:      56px;
+    right:    0;
+    bottom:   0;
+    z-index:  200;
+    border-left: none;
+    border-top:  1px solid var(--surface-border, $dl-border);
+
+    > * { min-width: 100vw; }
+  }
+}

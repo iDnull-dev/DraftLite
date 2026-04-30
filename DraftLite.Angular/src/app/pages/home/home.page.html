@@ -1,0 +1,102 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DraftLite — Home Dashboard
+     Layout: [Main Content] [Sidebar →]
+     The sidebar "pushes" the main content via CSS flex + width transition.
+═══════════════════════════════════════════════════════════════════════ -->
+<!-- ── Main Content ──────────────────────────────────────────────────── -->
+<main class="dl-main" role="main">
+    <!-- ── Auth error banner ──────────────────────────────────────────────── -->
+    @if (authStore.errorMessage()) {
+      <div class="dl-error-banner" role="alert">
+        <i class="pi pi-exclamation-triangle"></i>
+        <span>{{ authStore.errorMessage() }}</span>
+      </div>
+    }
+    
+    <!-- Anonymous Hero ─────────────────────────────────────────────────── -->
+    @if (!isAuthenticated()) {
+      <section class="dl-hero" aria-labelledby="hero-title">
+        <div class="dl-hero__eyebrow">
+          <span class="dl-hero__pill">Beta</span>
+        </div>
+
+        <h1 id="hero-title" class="dl-hero__title">
+          Welcome to&nbsp;<em>DraftLite</em>
+        </h1>
+
+        <p class="dl-hero__desc">
+          A minimalist workspace for your thoughts and collaborations.
+        </p>
+
+        <div class="dl-hero__cta">
+          <button
+            pButton
+            pRipple
+            label="Get started — it's free"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            class="p-button-lg dl-hero__primary-btn"
+            (click)="mockLogin()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Learn more"
+            class="p-button-text p-button-lg dl-hero__secondary-btn"
+          ></button>
+        </div>
+
+        <!-- Decorative feature pills -->
+        <div class="dl-hero__features">
+          <p-chip label="Real-time collaboration" icon="pi pi-users"></p-chip>
+          <p-chip label="Markdown-first"          icon="pi pi-code"></p-chip>
+          <p-chip label="Privacy-focused"         icon="pi pi-lock"></p-chip>
+        </div>
+
+        <!-- Abstract background ornament -->
+        <div class="dl-hero__ornament" aria-hidden="true">
+          <div class="dl-hero__ring dl-hero__ring--1"></div>
+          <div class="dl-hero__ring dl-hero__ring--2"></div>
+          <div class="dl-hero__ring dl-hero__ring--3"></div>
+        </div>
+      </section>
+    }
+
+    <!-- Authenticated Dashboard ─────────────────────────────────────────── -->
+    @if (isAuthenticated() && currentUser()) {
+      <section class="dl-dashboard" aria-labelledby="dash-title">
+        <div class="dl-dashboard__header">
+          <div>
+            <p class="dl-dashboard__greeting">Good day,</p>
+            <h2 id="dash-title" class="dl-dashboard__name">{{ currentUser()!.pseudo }}</h2>
+          </div>
+          <button
+            pButton
+            pRipple
+            label="New draft"
+            icon="pi pi-plus"
+            class="p-button-sm dl-dashboard__new-btn"
+          ></button>
+        </div>
+
+        <!-- Placeholder cards grid -->
+        <div class="dl-dashboard__grid">
+          <div class="dl-card dl-card--new">
+            <i class="pi pi-file-edit dl-card__icon"></i>
+            <span class="dl-card__label">New document</span>
+          </div>
+          <div class="dl-card dl-card--recent">
+            <i class="pi pi-clock dl-card__icon"></i>
+            <span class="dl-card__label">Recent files</span>
+            <span class="dl-card__empty">Nothing yet</span>
+          </div>
+          <div class="dl-card dl-card--starred">
+            <i class="pi pi-star dl-card__icon"></i>
+            <span class="dl-card__label">Starred</span>
+            <span class="dl-card__empty">Nothing yet</span>
+          </div>
+        </div>
+      </section>
+    }
+
+</main> 
