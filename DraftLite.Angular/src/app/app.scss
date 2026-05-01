@@ -1,0 +1,80 @@
+// ─── Design Token Overrides ───────────────────────────────────────────────
+// These align with PrimeNG's CSS variable system (Nora preset).
+// Override here or in styles.scss with :root {}. Listed for clarity.
+//
+//  --primary-color:          #7c3aed   (purple-600)
+//  --primary-color-text:     #ffffff
+//  --surface-ground:         #1c1c1e   (Soho dark ground)
+//  --surface-section:        #2a2a2d
+//  --surface-card:           #232326
+//  --surface-overlay:        #2e2e32
+//  --surface-border:         #3a3a40
+//  --text-color:             #e4e4e7
+//  --text-color-secondary:   #a1a1aa
+//  --font-family:            'DM Sans', sans-serif
+// ─────────────────────────────────────────────────────────────────────────
+
+// ─── SCSS Variables (Soho Dark + Purple) ─────────────────────────────────
+
+$dl-purple-50:  #f5f3ff;
+$dl-purple-100: #ede9fe;
+$dl-purple-400: #a78bfa;
+$dl-purple-500: #8b5cf6;
+$dl-purple-600: #7c3aed;   // primary
+$dl-purple-700: #6d28d9;
+$dl-purple-900: #3b0764;
+
+// Soho surface scale (dark)
+$dl-ground:   #1c1c1e;
+$dl-section:  #2a2a2d;
+$dl-card:     #232326;
+$dl-overlay:  #2e2e32;
+$dl-border:   #3a3a40;
+
+// Text
+$dl-text:          #e4e4e7;
+$dl-text-muted:    #a1a1aa;
+$dl-text-faint:    #52525b;
+
+// Sidebar
+$dl-sidebar-width: 280px;
+
+// Transitions
+$dl-transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+// ─── Shell Layout ─────────────────────────────────────────────────────────
+
+.dl-shell {
+    display:        flex;
+    flex-direction: column;
+    min-height:     100vh;
+    background:     var(--surface-ground, $dl-ground);
+    color:          var(--text-color, $dl-text);
+    font-family:    var(--font-family, 'DM Sans', sans-serif);
+    overflow-x:     hidden;
+  }
+
+// ─── Workspace (main + sidebar) ───────────────────────────────────────────
+
+.dl-workspace {
+    display:    flex;
+    flex:       1;
+    overflow:   hidden;
+    position:   relative;
+    width: 100vw;
+  }
+
+// ─── Main Content ─────────────────────────────────────────────────────────
+
+.dl-main {
+    flex:        1;
+    min-width:   0;               // allow flex shrink
+    overflow-y:  auto;
+    transition:  margin-right $dl-transition-base;
+    padding:     2.5rem 3rem;
+  
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+    }
+  }

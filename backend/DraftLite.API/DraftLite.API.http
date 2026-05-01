@@ -1,0 +1,6 @@
+@DraftLite.API_HostAddress = http://localhost:5197
+
+GET {{DraftLite.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

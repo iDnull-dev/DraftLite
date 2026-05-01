@@ -19,7 +19,7 @@
 
 **DraftLite** is a personal portfolio project built to demonstrate full-stack engineering skills across a modern, typed technology stack. It replicates the core experience of Notion — users can organize their work into projects, write and structure content using a block-based editor, and collaborate with others via shareable links with role-based access.
 
-The project intentionally covers a broad range of engineering concerns: OAuth authentication, relational data modeling, permission enforcement, audit logging, and a reactive Angular SPA — all deployed via a CI/CD pipeline.
+The project intentionally covers a broad range of engineering concerns: OAuth authentication, relational data modeling, permission enforcement, audit logging, and a reactive Angular SPA all deployed via a CI/CD pipeline.
 
 ---
 
@@ -204,7 +204,7 @@ ng serve
 
 ```
 Notion/
-├── frontend/                  # Angular 17 SPA
+├── DraftLite.Angular/                  # Angular 17 SPA
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── components/     # Shared components

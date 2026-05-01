@@ -1,0 +1,63 @@
+@import '../../app.scss';
+@import "primeicons/primeicons.css";
+// ─── Top Bar ──────────────────────────────────────────────────────────────
+
+.dl-topbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 1.5rem;
+  height:          56px;
+  background:      var(--surface-card, $dl-card);
+  border-bottom:   1px solid var(--surface-border, $dl-border);
+  position:        sticky;
+  top:             0;
+  z-index:         100;
+  flex-shrink:     0;
+
+  &__brand {
+    display:     flex;
+    align-items: center;
+    gap:         0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  &__logo-mark {
+    font-size:  1.3rem;
+    color:      var(--primary-color, $dl-purple-600);
+    line-height: 1;
+  }
+
+  &__wordmark {
+    font-size:  1rem;
+    color:      var(--text-color, $dl-text);
+  }
+
+  &__actions {
+    display:     flex;
+    align-items: center;
+    gap:         0.5rem;
+  }
+
+  &__avatar {
+    background: var(--primary-color, $dl-purple-600) !important;
+    color:      #fff !important;
+    font-size:  0.75rem !important;
+    width:      32px !important;
+    height:     32px !important;
+    cursor:     default;
+  }
+
+  &__toggle,
+  &__signout,
+  &__signin {
+    color: var(--text-color-secondary, $dl-text-muted) !important;
+
+    &:hover {
+      color: var(--primary-color, $dl-purple-600) !important;
+    }
+  }
+
+  
+}

@@ -1,0 +1,13 @@
+<div class="dl-shell">
+    <app-header></app-header>
+
+
+    <!-- ── Content + Sidebar wrapper ──────────────────────────────────────── -->
+    <div class="dl-workspace">
+        <router-outlet/>
+        @if(isSidebarVisible()){
+        <app-project-nav class="dl-sidebar__header">
+        </app-project-nav>
+        }
+    </div> <!-- /.dl-workspace -->
+</div><!-- /.dl-shell -->
