@@ -95,8 +95,6 @@ export class Home{
  
   /** Demo helper — remove when real login flow is wired up. */
   protected mockLogin(): void {
-  }
- 
-  protected logout(): void {
+    this.authStore.switchShowLoginDialogBox();
   }
 }

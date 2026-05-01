@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import type { UserDto } from '../services/models/user.models';
 import type { AuthService } from '../services/auth/auth.service';
 
@@ -10,10 +10,21 @@ export type AuthStatus = 'anonymous' | 'loading' | 'authenticated' | 'needs_regi
   providedIn: 'root',
 })
 export class AuthStore {
+  private readonly _showLoginDialogBox = signal<boolean>(false);
   readonly token = signal<string | null>(sessionStorage.getItem(AUTH_TOKEN_KEY));
   readonly user = signal<UserDto | null>(null);
   readonly status = signal<AuthStatus>('anonymous');
   readonly errorMessage = signal<string | null>(null);
+
+  readonly showLoginDialogBox = computed(() => this._showLoginDialogBox() && !this.isUserAuthenticated())
+  readonly isUserAuthenticated = computed(() => this.status() == "authenticated");
+  
+  switchShowLoginDialogBox(){
+    if (this.isUserAuthenticated()) 
+      this._showLoginDialogBox.set(false);
+    else
+     this._showLoginDialogBox.set(!this._showLoginDialogBox());
+  }
 
   setToken(token: string | null) {
     this.token.set(token);
@@ -27,6 +38,7 @@ export class AuthStore {
 
   resetToAnonymous() {
     this.setUser(null);
+    this._showLoginDialogBox.set(false);
     this.status.set('anonymous');
     this.errorMessage.set(null);
     this.setToken(null);
@@ -35,6 +47,7 @@ export class AuthStore {
   async loadMe(authService: AuthService) {
     this.status.set('loading');
     this.errorMessage.set(null);
+    this._showLoginDialogBox.set(false);
     try {
       const me = await authService.fetchMe();
       this.user.set(me);
@@ -45,6 +58,7 @@ export class AuthStore {
       this.status.set('needs_register');
       throw e;
     }
+    
   }
 }
 

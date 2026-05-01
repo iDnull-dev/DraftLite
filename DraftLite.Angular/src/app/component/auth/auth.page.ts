@@ -39,7 +39,7 @@ type GoogleIdTokenPayload = {
   templateUrl: './auth.page.html',
   styleUrl: './auth.page.scss',
 })
-export class AuthPageComponent implements OnInit, OnDestroy {
+export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild('googleButton', { static: true }) googleButton!: ElementRef<HTMLDivElement>;
 
   readonly pseudoForm = new FormGroup({
