@@ -31,6 +31,7 @@ import { ChipModule } from 'primeng/chip';
 import type { UserDto } from '../../services/models/user.models';
 import{AuthStore} from '../../stores/auth.store';
 import { SideNavStore } from '../../stores/sideNav.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -118,15 +119,18 @@ import { SideNavStore } from '../../stores/sideNav.store';
 })
 
 export class HeaderComponent {
+  private readonly router = inject(Router);
   protected readonly authStore = inject(AuthStore);
   
   protected readonly sideNav = inject(SideNavStore);
-  protected readonly isSidebarVisible = computed(
+
+  protected Login = output<void>();
+
+  // ─── Derived state (computed) ─────────────────────────────────────────────
+   protected readonly isSidebarVisible = computed(
     () => this.sideNav.isSidebarVisible(),
   );
 
-  // ─── Derived state (computed) ─────────────────────────────────────────────
- 
   /** True when the user has successfully authenticated. */
   protected readonly isAuthenticated = computed(
     () => this.authStore.status() === 'authenticated',
@@ -169,8 +173,11 @@ export class HeaderComponent {
   }
 
   protected mockLogin(): void {
+    this.authStore.switchShowLoginDialogBox();
   }
  
   protected logout(): void {
+    this.authStore.resetToAnonymous();
+    this.router.navigateByUrl('/auth');    
   }
 }

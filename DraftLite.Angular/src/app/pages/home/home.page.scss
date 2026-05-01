@@ -4,6 +4,20 @@
 // ═══════════════════════════════════════════════════════════════════════════
 @import '../../app.scss';
 
+// ─── Main Content ─────────────────────────────────────────────────────────
+
+.dl-main {
+  flex:        1;
+  min-width:   0;    
+  height: 100%;        // allow flex shrink
+  overflow-y:  auto;
+  transition:  margin-right $dl-transition-base;
+  padding:     2.5rem 3rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+}
 
 // Push effect: sidebar pushes main content left
 // .dl-shell.sidebar-open .dl-main {

@@ -5,9 +5,14 @@
     <!-- ── Content + Sidebar wrapper ──────────────────────────────────────── -->
     <div class="dl-workspace">
         <router-outlet/>
+
         @if(isSidebarVisible()){
         <app-project-nav class="dl-sidebar__header">
         </app-project-nav>
+        }
+
+        @if(isShowLoginDilogbox() && !isAuthenticated()) {
+            <app-auth></app-auth>
         }
     </div> <!-- /.dl-workspace -->
 </div><!-- /.dl-shell -->
