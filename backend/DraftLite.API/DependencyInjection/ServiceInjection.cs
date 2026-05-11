@@ -15,7 +15,8 @@ public static class ServiceInjection
         services.AddScoped<IAppMapper, AppMapper>();
 
         services.AddScoped<IUserService, UserService>();
-      
+        services.AddSingleton<JwtService>();
+
         return services;
     }
 }

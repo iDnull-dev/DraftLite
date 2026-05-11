@@ -39,7 +39,7 @@ The project intentionally covers a broad range of engineering concerns: OAuth au
 
 ## 🏗 Architecture
 
-```
+```md
 ┌─────────────────────┐        ┌───────────────────────┐        ┌──────────────┐
 │   Angular 17 SPA    │  HTTP  │  ASP.NET Core API     │  EF    │  PostgreSQL  │
 │   (Vercel)          │ ─────► │  (Railway)            │ ─────► │  (Supabase)  │
@@ -53,6 +53,7 @@ The project intentionally covers a broad range of engineering concerns: OAuth au
 ```
 
 **Auth flow:**
+
 1. User clicks "Sign in with Google" in Angular
 2. Google returns an OAuth token to the Angular app
 3. Angular sends the token to `POST /auth/google-login`
@@ -64,14 +65,14 @@ The project intentionally covers a broad range of engineering concerns: OAuth au
 ## 🗄 Data Model
 
 | Table | Key columns |
-|---|---|
+| --- | --- |
 | `users` | `id`, `google_id`, `email`, `pseudo`, `created_at`, `isActive`, `ban_at`, `ban_reason`, `role_id -> role` |
 | `role` | `id`, `name` |
-| `projectRole`| `id`, `name` |
+| `projectRole` | `id`, `name` |
 | `projects` | `id`, `owner_id → users`, `title`, `created_at`, `updated_at`, `deleted_at` |
 | `pages` | `id`, `project_id → projects`, `title`, `blocks` (JSONB), `order_index`, `created_at`, `updated_at`, `deleted_at` |
 | `project_collaborators` | `project_id`, `user_id`, `role_id -> projectRole` (reader/writer/projectAdmin/owner), `invited_by -> users` |
-| `projectHistory` | `id`, `project_id`, `page_id`, `user_id`, `action`, `base_version`, `version`, `patch` (JSONB), `created_at` | 
+| `projectHistory` | `id`, `project_id`, `page_id`, `user_id`, `action`, `base_version`, `version`, `patch` (JSONB), `created_at` |
 | `audit_log` | `id`, `entity_type`, `entity_id`, `user_id`, `action`, `changed_at` |
 
 Page content is stored as a **JSONB array of blocks**, allowing new block types to be added without schema migrations:
@@ -98,7 +99,7 @@ Page content is stored as a **JSONB array of blocks**, allowing new block types 
 Every API request to a project or page runs through a `PermissionService` before the controller handles it:
 
 | Role | Read pages | Edit pages | Manage sharing | Delete project |
-|---|:---:|:---:|:---:|:---:|
+| --- | :---: | :---: | :---: | :---: |
 | **Owner** | ✅ | ✅ | ✅ | ✅ |
 | **Writer** | ✅ | ✅ | ❌ | ❌ |
 | **Reader** | ✅ | ❌ | ❌ | ❌ |
@@ -108,7 +109,7 @@ Every API request to a project or page runs through a `PermissionService` before
 ## 🛠 Tech Stack
 
 | Layer | Technology | Reason |
-|---|---|---|
+| --- | --- | --- |
 | Front-end | Angular 17 (standalone components) | Strongly typed, enterprise-grade, demonstrates SPA skills |
 | Auth | Google OAuth 2.0 + JWT | Industry standard, no password management needed |
 | Back-end | C# / ASP.NET Core 8 | Strongly typed, fast REST APIs, excellent EF Core ORM |
@@ -202,7 +203,7 @@ ng serve
 
 ## 📁 Project Structure
 
-```
+```md
 Notion/
 ├── DraftLite.Angular/                  # Angular 17 SPA
 │   ├── src/
@@ -259,6 +260,7 @@ ng test --watch=false
 ```
 
 Key test coverage:
+
 - `PermissionService` — all role combinations
 - `AuthGuard` — redirect behaviour for unauthenticated users
 - `PagesController` — CRUD with mocked service layer
@@ -270,7 +272,7 @@ Key test coverage:
 Full interactive docs available at `/swagger` when running locally.
 
 | Method | Endpoint | restricted | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | USERS | `/users` | | |
 | POST | `/users/register` | Anonymous, JWT | Add users to data base if don't existe |
 | GET | `/users/` | Anonymous, JWT | Get users info from db base on jwt |
@@ -283,14 +285,14 @@ Full interactive docs available at `/swagger` when running locally.
 | GET | `/projects` | LoginUser, JWT | List user's projects and sheared project |
 | GET | `/projects/history/{id}` | LoginUser, Admin, JWT | Project list of history |
 | GET | `/projects/content/{id}` | LoginUser, Admin, JWT | Project content |
-| PUT | `/projects/{id}` | LoginUser(owner), Admin, JWT | Update Name, user's list sheared and permition  |
-| DELETE | `/projects/{id}` | LoginUser(owner), Admin, JWT | Delete a project  |
+| PUT | `/projects/{id}` | LoginUser(owner), Admin, JWT | Update Name, user's list sheared and permition |
+| DELETE | `/projects/{id}` | LoginUser(owner), Admin, JWT | Delete a project |
 | GET | `/projects/user/{id}` | Admin, JWT | List user's projects and sheared project |
 | Page | `/projects/{id}/pages` | | |
 | POST | `/projects/{id}/pages` | LoginUser, JWT | Create a page |
-| GET  | `/projects/{id}/pages` | LoginUser, Admin, JWT | List pages in a project |
+| GET | `/projects/{id}/pages` | LoginUser, Admin, JWT | List pages in a project |
 | GET | `/projects/{id}/pages/content/{id}` | LoginUser, Admin, JWT | Page content |
-| PUT  | `/projects/{id}/pages/{id}` | LoginUser, Admin, JWT | Update page Name, User sheared, User permistion |
+| PUT | `/projects/{id}/pages/{id}` | LoginUser, Admin, JWT | Update page Name, User sheared, User permistion |
 | DELETE | `/projects/{id}/pages/{id}` | LoginUser, Admin, JWT | Delete a page |
 
 ---
@@ -308,7 +310,7 @@ Full interactive docs available at `/swagger` when running locally.
 
 ## 👤 Author
 
-** Lucas **
+**Lucas**
 <!-- - Portfolio: [yourportfolio.dev](https://yourportfolio.dev) -->
 - GitHub: [@lucas](https://github.com/iDnull-dev/)
 - LinkedIn: [@lucas](https://linkedin.com/in/lucas.landrecy-dev)

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using DraftLite.Dto;
+using DraftLite.DTO;
 using DraftLite.Service.Interfaces;
 using DraftLite.Data.Entities;
 
