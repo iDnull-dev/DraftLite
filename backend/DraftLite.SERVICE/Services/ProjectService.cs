@@ -92,7 +92,11 @@ public sealed class ProjectService : IProjectService
             throw new UnauthorizedAccessException("Missing Google user id.");
 
         var user = await _db.Users.SingleOrDefaultAsync(u => u.GoogleId == userGoogleId, ct);
-        if (user is null) throw new KeyNotFoundException("User not found.");
+        if (user is null) 
+        {
+            throw new KeyNotFoundException("User not found.");
+        }
+        
         return user;
     }
 }

@@ -24,11 +24,15 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DividerModule } from 'primeng/divider';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ChipModule } from 'primeng/chip';
+import { DynamicDialogModule, DialogService } from 'primeng/dynamicdialog';
 
 import type { UserDto } from '../../services/models/user.models';
-import type { ProjectDto} from '../../dto/projectDto'
 import{AuthStore} from '../../stores/auth.store';
 import { SideNavStore } from '../../stores/sideNav.store';
+
+import { ProjectService } from '../../services/project/project.service';
+import { ProjectDto, CreateProjectRequest, UpdateProjectRequest } from '../../services/models/project.models';
+import { DialogCreateProject } from '../project/DialogCreateProject/DialogCreateProject';
 
 @Component({
   selector: 'app-project-nav',
@@ -40,7 +44,9 @@ import { SideNavStore } from '../../stores/sideNav.store';
     TooltipModule,
     DividerModule,
     SkeletonModule,
-    ChipModule,],
+    ChipModule,
+    DynamicDialogModule,],
+  providers: [DialogService],
   template: `  <aside
   class="dl-sidebar"
   [class.dl-sidebar--visible]="isSidebarVisible()"
@@ -94,6 +100,7 @@ import { SideNavStore } from '../../stores/sideNav.store';
       pButton
       pRipple
       label="New project"
+      (click)="createProject()"
       icon="pi pi-plus"
       class="p-button-text p-button-sm dl-sidebar__add-btn"
     ></button>
@@ -118,7 +125,7 @@ import { SideNavStore } from '../../stores/sideNav.store';
           <i class="pi pi-share-alt dl-sidebar__item-icon"></i>
           <div class="dl-sidebar__item-content">
             <span class="dl-sidebar__item-title">{{ project.title }}</span>
-            <span class="dl-sidebar__item-meta">{{ project.collaborators }} collaborators</span>
+            <span class="dl-sidebar__item-meta">{{ project.ownerPseudo }} collaborators</span>
           </div>
         </li>
       } @empty {
@@ -148,8 +155,9 @@ import { SideNavStore } from '../../stores/sideNav.store';
 
 export class ProjectNavComponent {
   protected readonly authStore = inject(AuthStore);
-  
+  protected readonly projectService = inject(ProjectService);
   protected readonly sideNav = inject(SideNavStore);
+  private readonly dialogService = inject(DialogService);
   protected readonly isSidebarVisible = computed(
     () => this.sideNav.isSidebarVisible(),
   );
@@ -177,6 +185,19 @@ export class ProjectNavComponent {
     );
   });
 
+ // ─── Reactive side-effects ────────────────────────────────────────────────
+ 
+  /**
+   * Reacts to auth status changes:
+   *  - Opens sidebar and loads project lists on login.
+   *  - Clears everything on logout / anonymous state.
+   */
+  private readonly updateProjectsEffect = effect(() => {
+    if (this.isSidebarVisible() && this.isAuthenticated() ) {   
+      this.getOwnProjects().then(projects => this.ownProjects.set(projects));
+    }
+  });
+  
   // ─── Local UI state ───────────────────────────────────────────────────────
  
   protected readonly ownProjects      = signal<ProjectDto[]>([]);
@@ -185,12 +206,35 @@ export class ProjectNavComponent {
   // ─── Private Data Methods ─────────────────────────────────────────────────
  
   /** Returns projects owned by the current user. Replace with HTTP call when ready. */
-  private getOwnProjects(): Observable<ProjectDto[]> {
-    return of([]);
+  private async getOwnProjects(): Promise<ProjectDto[]> {
+    return this.projectService.fetchProjects();
   }
  
   /** Returns projects shared with the current user. Replace with HTTP call when ready. */
   private getSharedProjects(): Observable<ProjectDto[]> {
     return of([]);
+  }
+
+  // ─── Event Handlers ───────────────────────────────────────────────────────
+
+  // Show the dialog to create a new project
+  protected createProject() { 
+    const dialogRef = this.dialogService.open(DialogCreateProject, {
+      header: 'Créer un projet',
+      modal: true,
+      closable: true,
+      dismissableMask: true,
+      styleClass: 'dl-auth-dialog',
+      width: '28rem',
+      breakpoints: {
+        '640px': 'calc(100vw - 2rem)',
+      },
+    });
+
+    if ( dialogRef != null) 
+      dialogRef.onClose.subscribe((project?: ProjectDto | null) => {
+        if (!project) return;
+        this.ownProjects.update((projects) => [project, ...projects]);
+      });
   }
 }
