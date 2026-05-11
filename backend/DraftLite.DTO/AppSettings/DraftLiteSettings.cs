@@ -1,4 +1,4 @@
-namespace DraftLite.Dto.AppSettings;
+namespace DraftLite.DTO.AppSettings;
 
 public sealed class DraftLiteSettings
 {

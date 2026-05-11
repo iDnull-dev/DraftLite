@@ -1,4 +1,4 @@
-namespace DraftLite.Dto;
+namespace DraftLite.DTO;
 
 public sealed class RegisterUserRequest
 {

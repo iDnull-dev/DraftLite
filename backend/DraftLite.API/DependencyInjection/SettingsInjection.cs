@@ -1,4 +1,4 @@
-using DraftLite.Dto.AppSettings;
+using DraftLite.DTO.AppSettings;
 
 namespace DraftLite.Api.DependencyInjection;
 

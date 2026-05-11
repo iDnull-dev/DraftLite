@@ -1,8 +1,8 @@
 using DraftLite.Data;
 using DraftLite.Data.Entities;
-using DraftLite.Dto;
+using DraftLite.DTO;
 using DraftLite.Service.Interfaces;
-using DraftLite.Dto.AppSettings;
+using DraftLite.DTO.AppSettings;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 

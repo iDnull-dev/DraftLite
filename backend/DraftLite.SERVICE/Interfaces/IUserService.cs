@@ -1,5 +1,5 @@
 using DraftLite.Data.Entities;
-using DraftLite.Dto;
+using DraftLite.DTO;
 
 namespace DraftLite.Service.Interfaces;
 
