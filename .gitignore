@@ -40,6 +40,9 @@ obj/
 ## IDEs and editors
 .vs/
 .vscode/
+.cursor/
+.angular/
+.agent/
 
 ## Logs
 *.log
@@ -56,3 +59,4 @@ appsettings.Development.json
 appsettings.Local.json
 
 DraftLite.Angular/src/environments/environment.ts
+DraftLite.Angular/.cursor/*

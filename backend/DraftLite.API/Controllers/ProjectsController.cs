@@ -44,8 +44,11 @@ public sealed class ProjectsController : BaseController
     public async Task<IActionResult> Delete([FromRoute] Guid projectId, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Unauthorized();
-        await _projects.DeleteAsync(CurrentUserId, projectId, ct);
-        return NoContent();
+        bool isDeleted = await _projects.DeleteAsync(CurrentUserId, projectId, ct);
+        if (isDeleted)
+            return Ok(true);
+        else
+            return Ok(false);
     }
 }
 

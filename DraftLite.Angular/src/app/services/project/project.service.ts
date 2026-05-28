@@ -15,5 +15,9 @@ export class ProjectService {
   async createProject(request: CreateProjectRequest): Promise<ProjectDto> {
     return this.api.post<ProjectDto>('/projects', request);
   }
+
+  async deleteProject(id: string): Promise<boolean>{
+    return this.api.delete<boolean>("/projects/"+id);
+  }
 }
 

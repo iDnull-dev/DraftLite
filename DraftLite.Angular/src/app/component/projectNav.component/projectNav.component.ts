@@ -87,6 +87,22 @@ import { DialogCreateProject } from '../project/DialogCreateProject/DialogCreate
             <span class="dl-sidebar__item-title">{{ project.title }}</span>
             <span class="dl-sidebar__item-meta">{{ project.updatedAt | date:'MMM d' }}</span>
           </div>
+          <div style="float: right; display: inline-block; margin-left: auto;">
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-rounded p-button-sm dl-sidebar__deletProject"
+            (click)="toggleSidebar()"
+            aria-label="Close sidebar"
+          ><i class="pi pi-share-alt"></i>  </button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-rounded p-button-sm dl-sidebar__deletProject"
+            (click)="deletProject(project.id)"
+            aria-label="Close sidebar"
+          ><i class="pi pi-trash"></i>  </button>
+          </div>
         </li>
       } @empty {
         <li class="dl-sidebar__empty" role="listitem">
@@ -236,5 +252,20 @@ export class ProjectNavComponent {
         if (!project) return;
         this.ownProjects.update((projects) => [project, ...projects]);
       });
+  }
+
+  protected async deletProject(id: string){
+    console.log("deletProject", id);
+    try {
+      const project = await this.projectService.deleteProject(id);
+      if (project)
+      {
+        console.log("update", id);
+        this.ownProjects.update((projects) => projects.filter(e=> e.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+    }
   }
 }

@@ -1,4 +1,5 @@
 @import '../../app.scss';
+@import "primeicons/primeicons.css";
 
 .dl-sidebar {
   width:            0;
@@ -177,6 +178,20 @@
     &:hover {
       background:   rgba($dl-purple-600, 0.08) !important;
       border-color: var(--primary-color, $dl-purple-600) !important;
+    }
+  }
+
+  &__deletProject{
+    float: right;
+    width:  28px !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+
+    color: var(--text-color-secondary, $dl-text-muted) !important;
+
+    &:hover {
+      color: var(--primary-color, $dl-purple-600) !important;
+      background-color: transparent;
     }
   }
 }
