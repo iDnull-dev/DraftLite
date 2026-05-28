@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+.p-dialog.dl-auth-dialog,
+.dl-auth-dialog {
+  width: 420px;
+  max-width: calc(100vw - 2rem);
+  background: #fff;
+  border: 0;
+  border-radius: 16px !important;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden !important;
+
+  .p-dialog-header {
+    display: none;
+  }
+
+  .p-dialog-content {
+    padding: 1.5rem;
+    background: #fff;
+    color: #111827;
+    border-radius: 16px !important;
+  }
+}

@@ -13,12 +13,12 @@ public abstract class BaseController : ControllerBase
         _logger = logger;
     }
 
-    protected string? googleId { 
-        get { 
-             var sub = User.Claims.FirstOrDefault(e=> e.Type == ClaimTypes.NameIdentifier, new Claim("", "")).Value;
-             return sub;
-            } 
-        }         // Google user ID
+    // protected string? googleId { 
+    //     get { 
+    //          var sub = User.Claims.FirstOrDefault(e=> e.Type == ClaimTypes.NameIdentifier, new Claim("", "")).Value;
+    //          return sub;
+    //         } 
+    //     }         // Google user ID
     protected string? email { 
         get { 
             return User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue("email"); 

@@ -35,5 +35,9 @@ export class ApiService {
   post<T>(url: string, body: unknown, config?: AxiosRequestConfig): Promise<T> {
     return this.client.post<T>(url, body, config).then((r) => r.data);
   }
+
+  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    return this.client.delete<T>(url, config).then((r) => r.data);
+  }
 }
 

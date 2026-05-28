@@ -79,8 +79,8 @@ public sealed class UsersController : BaseController
     [Authorize]
     public async Task<ActionResult<object>> GetTheme(CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(googleId)) return Unauthorized();
-        var theme = await _users.GetThemeAsync(googleId, ct);
+        if (string.IsNullOrWhiteSpace(CurrentUserId)) return Unauthorized();
+        var theme = await _users.GetThemeAsync(CurrentUserId, ct);
         return Ok(new { theme });
     }
 
@@ -88,8 +88,8 @@ public sealed class UsersController : BaseController
     [Authorize]
     public async Task<ActionResult<UserDto>> UpdateTheme([FromBody] UpdateThemeRequest request, CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(googleId)) return Unauthorized();
-        var user = await _users.UpdateThemeAsync(googleId, request, ct);
+        if (string.IsNullOrWhiteSpace(CurrentUserId)) return Unauthorized();
+        var user = await _users.UpdateThemeAsync(CurrentUserId, request, ct);
         var userDto = _mapper.Map<User, UserDto>(user);
 
         return Ok(userDto);

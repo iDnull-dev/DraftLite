@@ -73,17 +73,17 @@ public sealed class ProjectService : IProjectService
         return _mapper.Map<Project, ProjectDto>(project);
     }
 
-    public async Task DeleteAsync(string userGoogleId, Guid projectId, CancellationToken ct = default)
+    public async Task<Boolean> DeleteAsync(string userGoogleId, Guid projectId, CancellationToken ct = default)
     {
         var user = await RequireUserAsync(userGoogleId, ct);
 
         var project = await _db.Projects.SingleOrDefaultAsync(p => p.Id == projectId && p.DeletedAt == null, ct);
-        if (project is null) return;
+        if (project is null) return false; 
         if (project.OwnerId != user.Id) throw new UnauthorizedAccessException("Only owner can delete project.");
 
         project.DeletedAt = DateTimeOffset.UtcNow;
         project.UpdatedAt = DateTimeOffset.UtcNow;
-        await _db.SaveChangesAsync(ct);
+        return await _db.SaveChangesAsync(ct) > 0;
     }
 
     private async Task<User> RequireUserAsync(string userGoogleId, CancellationToken ct)
@@ -92,7 +92,11 @@ public sealed class ProjectService : IProjectService
             throw new UnauthorizedAccessException("Missing Google user id.");
 
         var user = await _db.Users.SingleOrDefaultAsync(u => u.GoogleId == userGoogleId, ct);
-        if (user is null) throw new KeyNotFoundException("User not found.");
+        if (user is null) 
+        {
+            throw new KeyNotFoundException("User not found.");
+        }
+        
         return user;
     }
 }
